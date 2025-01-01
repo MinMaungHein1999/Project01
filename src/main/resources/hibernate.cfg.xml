@@ -14,7 +14,7 @@
         <property name="hibernate.c3p0.max_size">20</property>
 
         <!-- Hibernate Dialect -->
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialects</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
         <!-- Echo all executed SQL to stdout -->
         <property name="hibernate.show_sql">true</property>
@@ -23,5 +23,7 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <mapping class="org.example.model.Student"/>
+        <mapping class="org.example.model.Major"/>
+        <mapping class="org.example.model.Subject"/>
     </session-factory>
 </hibernate-configuration>
