@@ -6,6 +6,7 @@ import org.example.dao.SubjectDao;
 import org.example.model.Major;
 import org.example.model.Student;
 import org.example.model.Subject;
+import org.example.validation.EnrollmentValidation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -124,7 +125,6 @@ public class Main {
         }
 
     }
-
     private static void subjectMenu() throws IOException {
         while(true) {
             displaySubjectMenu();
@@ -165,23 +165,27 @@ public class Main {
     }
 
     private static void deleteSubject() throws IOException {
-        System.out.print("Enter Subject Id do you want to delete?");
-        int subjectId = Integer.parseInt(br.readLine());
-        subjectDao.delete(subjectId);
+        System.out.print("Enter Subject Code do you want to delete?");
+        String subjectCode = br.readLine();
+        subjectDao.deleteByCode(subjectCode);
     }
 
     private static void subjectEnrollmentMenu() throws IOException {
         System.out.print("Enter Your Student Id?");
         int studnetId = Integer.parseInt(br.readLine());
         displaySubjects();
-        System.out.print("Enter Subject Id do you want to enroll?");
-        int subjectId = Integer.parseInt(br.readLine());
+        System.out.print("Enter Subject Code do you want to enroll?");
+        String subjectCode = br.readLine();
 
         Student student = studentDao.findById(studnetId);
-        Subject subject = subjectDao.findById(subjectId);
+        Subject subject = subjectDao.findByCode(subjectCode);
         student.getSubjects().add(subject);
-        studentDao.update(student);
-
+        try {
+            EnrollmentValidation.validateCreate(studnetId, subjectCode);
+            studentDao.update(student);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void displaySubjects() {
@@ -229,7 +233,6 @@ public class Main {
     }
 
     private static void createMajor() throws IOException {
-
         System.out.print("Enter New Major :");
         String majorName =br.readLine();
         Major major = new Major();

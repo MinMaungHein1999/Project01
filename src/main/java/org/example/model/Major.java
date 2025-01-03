@@ -35,6 +35,6 @@ public class Major {
 
     @Override
     public String toString(){
-        return " Major : "+this.name;
+        return " Major : "+this.name+", ID : "+this.id;
     }
 }

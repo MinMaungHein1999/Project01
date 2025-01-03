@@ -3,6 +3,8 @@ package org.example.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
+import org.postgresql.util.PSQLException;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ public abstract class AbstractDao<T>{
     public T findById(int id){
         Session session = sessionFactory.openSession();
         try {
-            T entity= session.get(getEntityClass(), id);
+            T entity = session.get(getEntityClass(), id);
             return entity;
         }catch (Exception e){
             e.printStackTrace();
@@ -63,18 +65,19 @@ public abstract class AbstractDao<T>{
         });
     }
 
-    private void executeCommonTransaction(TransactionalAction action){
+    public void executeCommonTransaction(TransactionalAction action){
         Transaction transaction = null;
         Session session = sessionFactory.openSession();
         try {
             transaction = session.beginTransaction();
             action.execute(session);
             transaction.commit();
+        }catch(ConstraintViolationException e){
+            System.out.println("Error Msg : "+ e.getMessage());
         }catch (Exception e){
             if(transaction!=null){
                 transaction.rollback();
             }
-            e.printStackTrace();
         }finally {
             session.close();
         }
@@ -82,9 +85,8 @@ public abstract class AbstractDao<T>{
     }
 
     @FunctionalInterface
-    private interface TransactionalAction {
+    public interface TransactionalAction {
         void execute(Session session);
     }
-
 
 }

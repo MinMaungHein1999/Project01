@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -37,17 +36,16 @@ public class Student {
     @Column(name = "address")
     private String address;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinTable(
             name="enrollments",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "subject_id")
+            joinColumns = { @JoinColumn(name = "student_id") },
+            inverseJoinColumns ={ @JoinColumn(name = "subject_id") }
     )
     private Set<Subject> subjects = new HashSet<>();
 
-
     @Override
     public String toString(){
-        return "id :"+ this.id+", name :"+this.name+", email :"+this.email;
+        return "Id :"+ this.id+", Name :"+this.name+", Email :"+this.email;
     }
 }

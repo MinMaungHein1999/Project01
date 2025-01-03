@@ -9,19 +9,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name= "subjects")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name= "subjects")
 public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(name = "code",nullable = false)
     private String code;
 
     @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER)
