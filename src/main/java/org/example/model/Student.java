@@ -36,13 +36,8 @@ public class Student {
     @Column(name = "address")
     private String address;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinTable(
-            name="enrollments",
-            joinColumns = { @JoinColumn(name = "student_id") },
-            inverseJoinColumns ={ @JoinColumn(name = "subject_id") }
-    )
-    private Set<Subject> subjects = new HashSet<>();
+    @OneToMany(mappedBy ="student", cascade = CascadeType.ALL)
+    private Set<Enrollment> enrollments;
 
     @Override
     public String toString(){

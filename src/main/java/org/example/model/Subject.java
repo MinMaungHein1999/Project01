@@ -24,8 +24,8 @@ public class Subject {
     @Column(name = "code",nullable = false)
     private String code;
 
-    @ManyToMany(mappedBy = "subjects", fetch = FetchType.EAGER)
-    private Set<Student> students = new HashSet<>();
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+    private Set<Enrollment> enrollments;
 
     @Override
     public String toString(){
