@@ -1,17 +1,18 @@
 package org.example.dao;
 
+import org.example.model.ScholarStudent;
 import org.example.util.HibernateUtil;
 import org.hibernate.SessionFactory;
-import org.example.model.Major;
-public class MajorDao extends AbstractDao<Major>{
+
+public class ScholarStudentDao extends AbstractDao<ScholarStudent>{
     private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-    public MajorDao() {
+    public ScholarStudentDao() {
         super(sessionFactory);
     }
 
     @Override
-    public Class<Major> getEntityClass() {
-        return Major.class;
+    public Class<ScholarStudent> getEntityClass() {
+        return ScholarStudent.class;
     }
 }

@@ -5,6 +5,7 @@ import org.example.dao.MajorDao;
 import org.example.dao.StudentDao;
 import org.example.dao.SubjectDao;
 import org.example.model.*;
+import org.example.service.StudentRegistrationService;
 import org.example.validation.EnrollmentValidation;
 
 import java.io.IOException;
@@ -12,10 +13,30 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class StudentView extends BaseView{
+
+    private static StudentRegistrationService studentRegistrationService = new StudentRegistrationService();
     private static StudentDao studentDao = new StudentDao();
     private static MajorDao majorDao = new MajorDao();
     private static SubjectDao subjectDao = new SubjectDao();
     private static EnrollmentDao enrollmentDao = new EnrollmentDao();
+
+    public static Student getRegularStudentInfo(Student stu) throws IOException {
+        System.out.print("Enter Status (Active/Inactive)?");
+        String status = br.readLine();
+        RegularStudent regularStudent = new RegularStudent(stu, status);
+        return regularStudent;
+    }
+
+    public static Student getScholarStudentInfo(Student stu) throws IOException {
+        System.out.print("Enter Scholarship Amount :");
+        double scholarshipAmount = Double.parseDouble(br.readLine());
+        System.out.print("Enter Study Hour :");
+        int studyHour = Integer.parseInt(br.readLine());
+        System.out.print("Enter Scholarship Percentage :");
+        double scholarPercentage = Double.parseDouble(br.readLine());
+        ScholarStudent scholarStudent = new ScholarStudent(stu, scholarshipAmount, studyHour, scholarPercentage);
+        return scholarStudent;
+    }
 
     public static Student getStudentInfo() throws IOException {
         System.out.print("Enter Your Name :");
@@ -30,7 +51,6 @@ public class StudentView extends BaseView{
         String address = br.readLine();
 
         Major major = getSelectedMajor();
-
         Student stu = new Student();
         stu.setName(name);
         stu.setEmail(email);
@@ -38,6 +58,16 @@ public class StudentView extends BaseView{
         stu.setPhone(phone);
         stu.setAddress(address);
         stu.setMajor(major);
+
+        System.out.print("Enter Student Type :");
+        String type = br.readLine();
+
+        if(type.equalsIgnoreCase("regular")){
+            stu = getRegularStudentInfo(stu);
+        }else if(type.equalsIgnoreCase("scholar")){
+            stu = getScholarStudentInfo(stu);
+        }
+
         return stu;
     }
 
@@ -57,7 +87,7 @@ public class StudentView extends BaseView{
 
     public static void createStudent() throws IOException, SQLException {
         Student student = getStudentInfo();
-        studentDao.create(student);
+        studentRegistrationService.createStudent(student);
     }
 
     public static void displayStudnetMenu(){

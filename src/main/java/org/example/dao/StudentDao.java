@@ -1,5 +1,6 @@
 package org.example.dao;
 
+import org.example.model.ScholarStudent;
 import org.example.model.Student;
 import org.example.model.Subject;
 import org.example.util.HibernateUtil;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class StudentDao extends AbstractDao<Student> {
     private static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private final ScholarStudentDao scholarStudentDao =  new ScholarStudentDao();
 
     public StudentDao() {
         super(sessionFactory);

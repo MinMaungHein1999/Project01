@@ -1,11 +1,9 @@
 package org.example.validation;
 
 import org.example.dao.StudentDao;
-import org.example.model.Student;
 import org.example.model.Subject;
 
 import java.util.List;
-import java.util.Set;
 
 public class EnrollmentValidation {
     private static StudentDao studentDao;

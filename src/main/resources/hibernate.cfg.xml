@@ -26,5 +26,7 @@
         <mapping class="org.example.model.Major"/>
         <mapping class="org.example.model.Subject"/>
         <mapping class="org.example.model.Enrollment"/>
+        <mapping class="org.example.model.ScholarStudent"/>
+        <mapping class="org.example.model.RegularStudent"/>
     </session-factory>
 </hibernate-configuration>

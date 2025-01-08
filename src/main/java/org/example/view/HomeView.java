@@ -1,10 +1,7 @@
 package org.example.view;
 
-import org.example.model.Student;
-
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 public class HomeView extends BaseView{
     public static void displayStudnetMenu(){
